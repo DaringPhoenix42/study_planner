@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Your Notes{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Your Notes</h1>
+
+<!-- SEARCH, CATEGORY FILTER, SORT -->
+<form method="GET" class="form-inline mb-3">
+  <!-- Search Bar -->
+  <input
+    type="text"
+    name="q"
+    class="form-control mr-2 mb-2"
+    placeholder="Search notes..."
+    value="{{ query }}"
+  />
+
+  <!-- Category Filter -->
+  <select name="category" class="form-control mr-2 mb-2">
+    <option value="">All Categories</option>
+    <option value="General" {% if category_filter == 'General' %}selected{% endif %}>General</option>
+    <option value="Personal" {% if category_filter == 'Personal' %}selected{% endif %}>Personal</option>
+    <option value="Work" {% if category_filter == 'Work' %}selected{% endif %}>Work</option>
+    <option value="Study" {% if category_filter == 'Study' %}selected{% endif %}>Study</option>
+  </select>
+
+  <!-- Sort Order -->
+  <select name="sort" class="form-control mr-2 mb-2">
+    <option value="newest" {% if sort_order == 'newest' %}selected{% endif %}>Newest First</option>
+    <option value="oldest" {% if sort_order == 'oldest' %}selected{% endif %}>Oldest First</option>
+  </select>
+
+  <button type="submit" class="btn btn-primary mb-2 mr-2">Search / Filter</button>
+  <a href="{% url 'notes' %}" class="btn btn-outline-light mb-2">Reset</a>
+</form>
+
+<!-- ADD NOTE BUTTON (Opens modal) -->
+<button
+  type="button"
+  class="btn btn-success mb-4"
+  data-toggle="modal"
+  data-target="#addNoteModal"
+>
+  <i class="fas fa-plus"></i> Add Note
+</button>
+
+<!-- NOTES LIST -->
+<div class="row">
+  {% for note in page_obj %}
+    <div class="col-md-4 mb-4">
+      <div class="card bg-secondary text-white h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ note.title }}</h5>
+          <p class="card-text">
+            {{ note.description|truncatechars:80 }}
+          </p>
+          <p>
+            <small class="text-light">
+              <strong>Category:</strong> {{ note.category }}<br/>
+              {% if note.tags %}
+
+                <strong>Tags:</strong> {{ note.tags }}
+              {% endif %}
+            </small>
+          </p>
+          <div class="mt-auto">
+            <a href="{% url 'notes-detail' note.pk %}" class="btn btn-sm btn-light">View Note</a>
+            <a href="{% url 'notes-edit' note.pk %}" class="btn btn-sm btn-outline-light ml-2">Edit</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <div class="col-md-12">
+      <p>No notes found.</p>
+    </div>
+  {% endfor %}
+</div>
+
+<!-- PAGINATION -->
+{% if page_obj.has_other_pages %}
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ query }}&category={{ category_filter }}&sort={{ sort_order }}" aria-label="Previous">
+          &laquo;
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+      {% else %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ num }}&q={{ query }}&category={{ category_filter }}&sort={{ sort_order }}">{{ num }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ query }}&category={{ category_filter }}&sort={{ sort_order }}" aria-label="Next">
+          &raquo;
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+
+<!-- MODAL FOR ADDING NEW NOTES -->
+<div
+  class="modal fade"
+  id="addNoteModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="addNoteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <form method="POST">
+      {% csrf_token %}
+      <div class="modal-content bg-dark text-light">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addNoteModalLabel">Add Note</h5>
+          <button
+            type="button"
+            class="close text-white"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {{ form.non_field_errors }}
+          <div class="form-group">
+            <label for="id_title">Title</label>
+            {{ form.title }}
+          </div>
+          <div class="form-group">
+            <label for="id_description">Description</label>
+            {{ form.description }}
+          </div>
+          <div class="form-group">
+            <label for="id_category">Category</label>
+            {{ form.category }}
+          </div>
+          <div class="form-group">
+            <label for="id_tags">Tags</label>
+            {{ form.tags }}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">Save Note</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

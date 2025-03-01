@@ -1,0 +1,81 @@
+/* static/css/blue_github.css */
+
+.bg-github-dark {
+    background-color: #0d1117;
+    color: #c9d1d9;
+  }
+  
+  /* Navbar, hero, footer styles, etc. */
+  .github-navbar {
+    background-color: #161b22;
+    border-bottom: 1px solid #30363d;
+  }
+  
+  /* Brand icon (FontAwesome rocket) */
+  .brand-icon {
+    font-size: 1.5rem;
+    color: #f0f6fc;
+  }
+  .brand-text {
+    color: #f0f6fc;
+    font-size: 1.25rem;
+  }
+  
+  /* Hero with animated gradient background */
+  .blue-hero {
+    background: linear-gradient(135deg, #1f1f2e 0%, #2f4ccd 100%);
+    background-size: 200% 200%;
+    animation: heroGradient 12s ease infinite;
+    padding: 4rem 1rem;
+    border-bottom: 1px solid #30363d;
+  }
+  @keyframes heroGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  /* Heading, subheading, etc. */
+  .hero-heading {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #f0f6fc;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  .hero-subheading {
+    font-size: 1.2rem;
+    color: #8b949e;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Fade-in animation for main content */
+  .fade-in {
+    animation: fadeIn 0.8s ease-in-out;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Footer styling */
+  .github-footer {
+    background-color: #161b22;
+    color: #8b949e;
+    border-top: 1px solid #30363d;
+    font-size: 0.9rem;
+  }
+  

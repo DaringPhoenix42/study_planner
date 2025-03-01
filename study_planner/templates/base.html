@@ -1,0 +1,440 @@
+{% comment %} <!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Planner - {% block title %}Home{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="bg-dark text-light">
+    <nav class="navbar navbar-expand-lg navbar-dark github-navbar">
+        <div class="container">
+          <!-- Logo & Brand -->
+          <a class="navbar-brand d-flex align-items-center" href="{% url 'dashboard' %}">
+            <img
+              src="{% static 'images/logo.png' %}"
+              alt="Study Planner Logo"
+              class="github-logo"
+            />
+            <span class="ml-2 font-weight-bold">Study Planner</span>
+          </a>
+      
+          <!-- Toggler for mobile view -->
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+      
+          <!-- Collapsible navbar links -->
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'dashboard' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'notes' %}">Notes</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'homework' %}">Homework</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'todo' %}">Todo</a>
+              </li>
+              {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link btn btn-success text-white px-3 ml-lg-2" href="{% url 'register' %}">
+                    Sign Up
+                  </a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+    
+
+
+    <div class="container mt-4">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">© 2025 Study Planner - All rights reserved</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    {% load static %}
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html> {% endcomment %}
+
+
+
+
+
+
+<!-- templates/base.html -->
+<!-- templates/base.html -->
+
+
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Planner - {% block title %}Home{% endblock %}</title>
+  
+  <!-- Bootstrap & FontAwesome -->
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+  />
+  
+  {% load static %}
+  <!-- Custom CSS (dark + blue theme with animations) -->
+  <link rel="stylesheet" href="{% static 'css/blue_github.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+<body class="d-flex flex-column min-vh-100 bg-github-dark text-light">
+  <!-- NAVBAR -->
+  {% comment %} <nav class="navbar navbar-expand-lg navbar-dark github-navbar">
+    <div class="container">
+      <!-- Brand (using FontAwesome icon for "logo") -->
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'dashboard' %}">
+        <i class="fas fa-rocket brand-icon"></i>
+        <span class="brand-text ml-2 font-weight-bold">Study Planner</span>
+      </a>
+
+      <!-- Mobile Toggler -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Collapsible Links -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'notes' %}">Notes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'homework' %}">Homework</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'todo' %}">Todo</a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="resourcesDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Resources
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="resourcesDropdown">
+              <!-- Update these to match your actual route names in urls.py -->
+              <a class="dropdown-item" href="{% url 'books' %}">Books</a>
+              <a class="dropdown-item" href="{% url 'wikipedia' %}">Wikipedia</a>
+              <a class="dropdown-item" href="{% url 'youtube' %}">YouTube</a>
+            </div>
+          </li>
+          
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link btn btn-success text-white px-3 ml-lg-2" href="{% url 'register' %}">
+                Sign Up
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav> {% endcomment %}
+  <!-- NAVBAR -->
+{% comment %} <nav class="navbar navbar-expand-lg navbar-dark github-navbar">
+    <div class="container">
+      <!-- Brand (using FontAwesome icon for "logo") -->
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'dashboard' %}">
+        <i class="fas fa-rocket brand-icon"></i>
+        <span class="brand-text ml-2 font-weight-bold">Study Planner</span>
+      </a>
+  
+      <!-- Mobile Toggler -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <!-- Collapsible Links -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'notes' %}">Notes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'homework' %}">Homework</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'todo' %}">Todo</a>
+          </li>
+  
+          <!-- Resources Dropdown -->
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="resourcesDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Resources
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="resourcesDropdown">
+              <!-- Update these to match your actual route names in urls.py -->
+              <a class="dropdown-item" href="{% url 'books' %}">Books</a>
+              <a class="dropdown-item" href="{% url 'wikipedia' %}">Wikipedia</a>
+              <a class="dropdown-item" href="{% url 'youtube' %}">YouTube</a>
+            </div>
+          </li>
+  
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link btn btn-success text-white px-3 ml-lg-2" href="{% url 'register' %}">
+                Sign Up
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav> {% endcomment %}
+
+  <nav class="navbar navbar-expand-lg navbar-dark github-navbar">
+    <div class="container">
+      <!-- Brand (using FontAwesome icon for "logo") -->
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'dashboard' %}">
+        <i class="fas fa-rocket brand-icon"></i>
+        <span class="brand-text ml-2 font-weight-bold">Study Planner</span>
+      </a>
+  
+      <!-- Mobile Toggler -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <!-- Collapsible Links -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <!-- Main Nav Items -->
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'notes' %}">Notes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'homework' %}">Homework</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'todo' %}">Todo</a>
+          </li>
+  
+          <!-- Resources Dropdown -->
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="resourcesDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Resources
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="resourcesDropdown">
+              <!-- Ensure these route names exist in your resources/urls.py -->
+              <a class="dropdown-item" href="{% url 'books' %}">Books</a>
+              <a class="dropdown-item" href="{% url 'wikipedia' %}">Wikipedia</a>
+              <a class="dropdown-item" href="{% url 'youtube' %}">YouTube</a>
+            </div>
+          </li>
+  
+          <!-- Auth Links -->
+          {% if user.is_authenticated %}
+            {% comment %} <li class="nav-item">
+              <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+            </li> {% endcomment %}
+         
+            <li class="nav-item">
+                <form
+                  method="post"
+                  action="{% url 'logout' %}"
+                  class="d-inline-block m-0 p-0"
+                  style="vertical-align: middle;"
+                >
+                  {% csrf_token %}
+                  <button
+                    type="submit"
+                    class="nav-link bg-transparent border-0 p-0 text-light"
+                    style="cursor: pointer;"
+                  >
+                    Logout
+                  </button>
+                </form>
+              </li>
+              
+              
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link btn btn-success text-white px-3 ml-lg-2" href="{% url 'register' %}">
+                Sign Up
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  
+
+  <!-- MAIN CONTENT WRAPPER (flex-grow-1 pushes footer to bottom) -->
+  <main class="flex-grow-1">
+    <!-- HERO SECTION (animated gradient background) -->
+    <section class="blue-hero d-flex align-items-center text-center text-lg-left">
+      <div class="container">
+        <h1 class="hero-heading">
+          Build and Organize Your <br class="d-none d-lg-block" />
+          Studies in One Place
+        </h1>
+        <p class="hero-subheading my-4">
+          Keep your notes, homework, and tasks in sync—so you can focus on learning, not juggling tools.
+        </p>
+        {% if not user.is_authenticated %}
+          <a href="{% url 'register' %}" class="btn btn-primary btn-lg mr-2 mb-2">
+            Sign Up
+          </a>
+          <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg mb-2">
+            Login
+          </a>
+        {% endif %}
+      </div>
+    </section>
+
+    <!-- PAGE CONTENT -->
+    <div class="container mt-4 fade-in">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <!-- FOOTER (stays pinned at bottom if content is short) -->
+  <footer class="github-footer text-center py-4 mt-5">
+    <div class="container">
+      <p class="mb-0">© 2025 Study Planner - All rights reserved</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  {% load static %}
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

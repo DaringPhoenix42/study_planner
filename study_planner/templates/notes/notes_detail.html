@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ note.title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-8 offset-md-2">
+    <div class="card bg-secondary text-white mb-4">
+      <div class="card-header">
+        <h3 class="mb-0">{{ note.title }}</h3>
+        <small>Created: {{ note.created_at|date:"F d, Y" }}</small>
+      </div>
+      <div class="card-body">
+        <p class="card-text">{{ note.description|linebreaks }}</p>
+        <p>
+          <strong>Category:</strong> {{ note.category }}<br/>
+          {% if note.tags %}
+            <strong>Tags:</strong> {{ note.tags }}
+          {% endif %}
+        </p>
+      </div>
+      <div class="card-footer">
+        <a href="{% url 'notes' %}" class="btn btn-outline-light">Back to Notes</a>
+        <a href="{% url 'notes-edit' note.pk %}" class="btn btn-outline-light ml-2">Edit</a>
+        <a href="{% url 'notes-delete' note.pk %}" class="btn btn-outline-danger float-right">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<style>
+  /* Card hover effect */
+  .card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+  }
+</style>
+
+<div class="text-center">
+  <h2 class="my-4">Welcome to Your Study Planner</h2>
+  <p class="text-muted mb-5">
+    Easily manage your notes, homework, and todos all in one place.
+  </p>
+</div>
+
+<!-- Buttons to open the "Add" modals -->
+<div class="d-flex justify-content-center mb-4">
+  <button class="btn btn-outline-light mx-2" data-toggle="modal" data-target="#addNoteModal">
+    <i class="fas fa-plus"></i> Add Note
+  </button>
+  <button class="btn btn-outline-light mx-2" data-toggle="modal" data-target="#addHomeworkModal">
+    <i class="fas fa-plus"></i> Add Homework
+  </button>
+  <button class="btn btn-outline-light mx-2" data-toggle="modal" data-target="#addTodoModal">
+    <i class="fas fa-plus"></i> Add Todo
+  </button>
+</div>
+
+<div class="row">
+  <!-- NOTES CARD -->
+  <div class="col-md-4 mb-4">
+    <div class="card bg-secondary text-white card-hover h-100">
+      <div class="card-header d-flex align-items-center border-0">
+        <i class="fas fa-sticky-note fa-lg mr-2"></i>
+        <h4 class="mb-0">Notes</h4>
+      </div>
+      <div class="card-body">
+        {% if notes %}
+          <ul class="list-group list-group-flush">
+            {% for note in notes %}
+              <li class="list-group-item bg-transparent text-white">
+                {{ note.title }}
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>No notes yet.</p>
+        {% endif %}
+      </div>
+      <div class="card-footer border-0">
+        <a href="{% url 'notes' %}" class="btn btn-outline-light btn-sm">View All</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOMEWORK CARD -->
+  <div class="col-md-4 mb-4">
+    <div class="card bg-secondary text-white card-hover h-100">
+      <div class="card-header d-flex align-items-center border-0">
+        <i class="fas fa-book fa-lg mr-2"></i>
+        <h4 class="mb-0">Homework</h4>
+      </div>
+      <div class="card-body">
+        {% if homeworks %}
+          <ul class="list-group list-group-flush">
+            {% for homework in homeworks %}
+              <li class="list-group-item bg-transparent text-white">
+                {{ homework.title }} - {{ homework.due_date|date:"M d, Y" }}
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>No homework yet.</p>
+        {% endif %}
+      </div>
+      <div class="card-footer border-0">
+        <a href="{% url 'homework' %}" class="btn btn-outline-light btn-sm">View All</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TODO CARD -->
+  <div class="col-md-4 mb-4">
+    <div class="card bg-secondary text-white card-hover h-100">
+      <div class="card-header d-flex align-items-center border-0">
+        <i class="fas fa-check-circle fa-lg mr-2"></i>
+        <h4 class="mb-0">Todo</h4>
+      </div>
+      <div class="card-body">
+        {% if todos %}
+          <ul class="list-group list-group-flush">
+            {% for todo in todos %}
+              <li class="list-group-item bg-transparent text-white">
+                {{ todo.title }}
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>No todos yet.</p>
+        {% endif %}
+      </div>
+      <div class="card-footer border-0">
+        <a href="{% url 'todo' %}" class="btn btn-outline-light btn-sm">View All</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALS FOR ADDING NEW ITEMS -->
+<!-- Add Note Modal -->
+<div class="modal fade" id="addNoteModal" tabindex="-1" role="dialog" aria-labelledby="addNoteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form method="POST">
+      {% csrf_token %}
+      <div class="modal-content bg-dark text-light">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addNoteModalLabel">Add Note</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {{ note_form.as_p }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" name="note_submit" class="btn btn-primary">Save Note</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Add Homework Modal -->
+<div class="modal fade" id="addHomeworkModal" tabindex="-1" role="dialog" aria-labelledby="addHomeworkModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form method="POST">
+      {% csrf_token %}
+      <div class="modal-content bg-dark text-light">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addHomeworkModalLabel">Add Homework</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {{ homework_form.as_p }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" name="homework_submit" class="btn btn-primary">Save Homework</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Add Todo Modal -->
+<div class="modal fade" id="addTodoModal" tabindex="-1" role="dialog" aria-labelledby="addTodoModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form method="POST">
+      {% csrf_token %}
+      <div class="modal-content bg-dark text-light">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addTodoModalLabel">Add Todo</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {{ todo_form.as_p }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" name="todo_submit" class="btn btn-primary">Save Todo</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

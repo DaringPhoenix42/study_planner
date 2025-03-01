@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-lg-4 col-md-5">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">{{ user.username }}</h4>
+        </div>
+        <div class="card-body text-center">
+          {% if user.profile.avatar %}
+            <img class="rounded-circle img-fluid mb-3" src="{{ user.profile.avatar.url }}" alt="{{ user.username }}'s avatar" style="max-width: 150px;">
+          {% else %}
+            <img class="rounded-circle img-fluid mb-3" src="{% static 'images/default_avatar.png' %}" alt="Default avatar" style="max-width: 150px;">
+          {% endif %}
+          <h5 class="card-title">{{ user.email }}</h5>
+          <p class="card-text">{{ user.profile.bio|default:"No bio yet." }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-8 col-md-7">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Edit Profile</h4>
+        </div>
+        <div class="card-body">
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+              <legend class="border-bottom mb-4">Profile Info</legend>
+              
+              <div class="form-group">
+                <label for="{{ u_form.username.id_for_label }}">Username</label>
+                {{ u_form.username|add_class:"form-control" }}
+              </div>
+              
+              <div class="form-group">
+                <label for="{{ u_form.email.id_for_label }}">Email</label>
+                {{ u_form.email|add_class:"form-control" }}
+              </div>
+              
+              <div class="form-group">
+                <label for="{{ p_form.bio.id_for_label }}">Bio</label>
+                {{ p_form.bio|add_class:"form-control" }}
+              </div>
+              
+              <div class="form-group">
+                <label for="{{ p_form.avatar.id_for_label }}">Avatar</label>
+                {{ p_form.avatar|add_class:"form-control-file" }}
+              </div>
+              
+              <div class="form-group">
+                <label for="{{ p_form.profile_pic.id_for_label }}">Profile Picture</label>
+                {{ p_form.profile_pic|add_class:"form-control-file" }}
+              </div>
+            </fieldset>
+            
+            <div class="form-group">
+              <button class="btn btn-primary" type="submit">Update</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} 
+{% extends 'base.html' %}
+
+{% block title %}Profile - Study Planner{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4 class="card-title mb-0">Profile Information</h4>
+            </div>
+            <div class="card-body text-center">
+                <img src="{{ user.profile.profile_pic.url }}" alt="Profile Picture" class="img-fluid rounded-circle mb-3" style="max-width: 150px;">
+                <h5>{{ user.username }}</h5>
+                <p class="text-muted">{{ user.email }}</p>
+                <hr>
+                <div class="text-start">
+                    <h6>Bio</h6>
+                    <p>{{ user.profile.bio|default:"No bio provided yet." }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="card-title mb-0">Edit Profile</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.bio.id_for_label }}" class="form-label">Bio</label>
+                                <textarea name="{{ form.bio.name }}" class="form-control {% if form.bio.errors %}is-invalid{% endif %}" id="{{ form.bio.id_for_label }}" rows="4">{{ form.bio.value|default:'' }}</textarea>
+                                {% if form.bio.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.bio.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.profile_pic.id_for_label }}" class="form-label">Profile Picture</label>
+                        <input type="file" name="{{ form.profile_pic.name }}" class="form-control {% if form.profile_pic.errors %}is-invalid{% endif %}" id="{{ form.profile_pic.id_for_label }}">
+                        {% if form.profile_pic.errors %}
+                        <div class="invalid-feedback">
+                                {% for error in form.profile_pic.errors %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="form-text">Current: {{ user.profile.profile_pic.name }}</div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} {% endcomment %}
+    {% comment %} {% extends "base.html" %}
+    {% block title %}Profile{% endblock %}
+    
+    {% block content %}
+    <div class="container mt-5">
+      <h2>Your Profile</h2>
+      <p>Welcome, {{ user.username }}!</p>
+      <!-- If you have a profile form or details, place them here -->
+    </div>
+    {% endblock %} {% endcomment %}
