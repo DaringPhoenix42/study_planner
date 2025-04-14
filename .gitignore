@@ -1,52 +1,52 @@
-# # Byte-compiled / optimized / DLL files
-# __pycache__/
-# *.py[cod]
-# *$py.class
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
 
-# # Virtual Environment
-# venv/
-# .env/
-# *.venv
+# Virtual Environment
+venv/
+.env/
+*.venv
 
-# # Django-related files
-# db.sqlite3
-# *.sqlite3
-# /media/
-# staticfiles/
-# local_settings.py  # If you have local settings
+# Django-related files
+db.sqlite3
+*.sqlite3
+/media/
+staticfiles/
+local_settings.py  # If you have local settings
 
-# # Logs & Debugging Files
-# *.log
-# *.pot
-# *.swp
-# .DS_Store
+# Logs & Debugging Files
+*.log
+*.pot
+*.swp
+.DS_Store
 
-# # Coverage reports
-# htmlcov/
-# .coverage
-# *.cover
-# .hypothesis/
-# .pytest_cache/
+# Coverage reports
+htmlcov/
+.coverage
+*.cover
+.hypothesis/
+.pytest_cache/
 
-# # Migrations (optional, if you don't want to track them)
-# **/migrations/*.py
-# !**/migrations/__init__.py
+# Migrations (optional, if you don't want to track them)
+**/migrations/*.py
+!**/migrations/__init__.py
 
-# # IDE / Editor files
-# .vscode/
-# .idea/
-# *.sublime-workspace
+# IDE / Editor files
+.vscode/
+.idea/
+*.sublime-workspace
 
-# # Jupyter Notebook checkpoints
-# .ipynb_checkpoints/
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
 
-# # Ignore compiled C extensions
-# *.so
+# Ignore compiled C extensions
+*.so
 
-# # Ignore pip dependency files
-# pip-log.txt
-# pip-delete-this-directory.txt
+# Ignore pip dependency files
+pip-log.txt
+pip-delete-this-directory.txt
 
-# # Ignore temporary files
-# *.tmp
-# *.bak
+# Ignore temporary files
+*.tmp
+*.bak

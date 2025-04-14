@@ -1,4 +1,3 @@
-
 # 📖 Study Planner
 
 Study Planner is a **Django-based web application** designed to help students organize their academic life by managing notes, homework, to-dos, and resources in one unified platform. This project emphasizes ease of use, a clean and intuitive interface, and scalability for future enhancements.
