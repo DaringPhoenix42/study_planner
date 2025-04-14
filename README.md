@@ -1,13 +1,11 @@
 
-
-```markdown
 # 📖 Study Planner
 
 Study Planner is a **Django-based web application** designed to help students organize their academic life by managing notes, homework, to-dos, and resources in one unified platform. This project emphasizes ease of use, a clean and intuitive interface, and scalability for future enhancements.
 
 ---
 
-## Table of Contents
+# Table of Contents
 
 - [Features](#features)
 - [Tech Stack](#tech-stack)
@@ -194,18 +192,3 @@ Contributions are welcome! If you'd like to contribute:
 This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more information.
 
 ---
-
-## Acknowledgements
-
-- Special thanks to the Django community for excellent documentation and support.
-- [Bootstrap](https://getbootstrap.com/) for the responsive UI components.
-- [FontAwesome](https://fontawesome.com/) for providing high-quality icons.
-
----
-
-### Happy Coding! 🚀
-```
-
----
-
-Feel free to modify any sections, update the repository URL, or add additional instructions based on your project needs. Enjoy building your Study Planner!
