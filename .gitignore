@@ -52,4 +52,5 @@ pip-delete-this-directory.txt
 *.bak
 
 study_planner_env/
+.env
 
